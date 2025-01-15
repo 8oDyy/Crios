@@ -1,0 +1,440 @@
+* {
+  margin: 0;
+  font-family: "Kantumruy Pro", sans-serif;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1em;
+  background-color: #EFD9CE;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 70px;
+  font-weight: 700;
+  color: #6F3939;
+  font-family: 'Kantumruy Pro', sans-serif;
+}
+
+h2 {
+  color: #f9f8ff;
+}
+
+p,
+li {
+  font-size: 1.1em;
+  color: #f9f8ff;
+}
+
+header,
+footer {
+  background-color: #7B7B7B;
+  border-bottom: #ffffff 1px solid;
+}
+
+header{
+    position: fixed; /* Rend le header fixe */
+    top: 0; /* Place le header en haut de la page */
+    left: 0; /* Aligne à gauche */ 
+    width: 100%; /* Largeur de 100% */
+    background-color: #7B7B7B; /* Couleur de fond */
+    z-index: 1000; /* Assure que le header reste au-dessus des autres éléments */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optionnel : ajoute une ombre pour distinction */
+}
+
+
+.cta {
+  display: inline-block;
+  background: #25283D;
+  filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+  color: white;
+  border-radius: 100px;
+  padding: 10px 15px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.cta:hover {
+  background: linear-gradient(#696484, #8788ba);
+  text-decoration: none;
+}
+
+
+section {
+  padding: 80px;
+}
+
+.a-propos-main {
+  width: 50%;
+  margin: auto;
+}
+
+footer,
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 30%;
+}
+
+nav a {
+  margin-left: 60px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  text-wrap: none;
+}
+
+.accueil-photos {
+  background-color: white;
+  padding: 80px;
+}
+
+.accueil-photos h2 {
+  color: #242424;
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.accueil-photos div {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.accueil-introduction {
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  align-items: flex-start;
+  margin: auto;
+  justify-content: center;
+  padding-top: 150px;
+  padding-bottom: 180px;
+}
+
+.accueil-introduction h1 {
+  margin-bottom: 15px;
+  opacity: 0;
+  animation: apphaut 1s ease-out 0.8s forwards;
+  z-index: 60;
+}
+
+.accueil-introduction p {
+  margin-bottom: 30px;
+}
+
+
+.portfolio-section-photos {
+  background-color: white;
+}
+
+.portfolio-section-photos h2 {
+  color: #242424;
+  margin-bottom: 80px;
+}
+
+.presentation{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+} 
+
+.titlenav{
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.buying-price{
+  color: black;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.cross-container {
+    position: relative;
+    display: inline-block;
+}
+
+.cross-container img {
+    position: relative;
+    z-index: 3;
+}
+
+/* Ligne horizontale */
+.cross-container::before {
+  content: '';
+  position: absolute;
+  top: 50%; /* Centré verticalement */
+  left: 50%; /* Centré horizontalement */
+  width: 0%; /* Initialement réduit à 0 */
+  height: 41px; /* Épaisseur de la ligne horizontale */
+  background: linear-gradient(90deg, #EFD9CE 0%, #C3A425 50%, #EFD9CE 100%);
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  animation: growHorizontal 1s ease-out forwards; /* Animation spécifique */
+}
+
+/* Ligne verticale */
+.cross-container::after {
+  content: '';
+  position: absolute;
+  top: 50%; /* Centré verticalement */
+  left: 50%; /* Centré horizontalement */
+  width: 41px; /* Épaisseur de la ligne verticale */
+  height: 0%; /* Initialement réduit à 0 */
+  background: linear-gradient(0deg, #EFD9CE 0%, #C3A425 50%, #EFD9CE 100%);
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  animation: growVertical 1s ease-out 0.5s forwards; /* Animation spécifique */
+}
+
+
+.wrapper {
+  width: 100%; 
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.carrouselle h2.visible {
+  opacity: 1; /* Applique l'animation lorsque la classe 'visible' est ajoutée */
+}
+
+.wrapper.visible {
+  opacity: 1; /* Applique l'animation lorsque la classe 'visible' est ajoutée */
+  transition-delay: 0.5s; /* Ajoute un délai de 0.5s */
+}
+
+.carrouselle{
+  background: #FFDCC7;
+}
+
+.carrouselle h2 {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  color: black;
+  margin-bottom: 80px;
+  font-size: 40px;
+}
+
+.container {
+  height: 700px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: start;
+}
+
+.card {
+  width: 80px;
+  border-radius: .75rem;
+  background-size: cover;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 2rem;
+  margin: 0 10px;
+  display: flex;
+  transition: .6s cubic-bezier(.28,-0.03,0,.99);
+  box-shadow: 0px 10px 30px -5px rgba(0,0,0,0.8);
+  background-color: black;
+}
+
+.card img{
+  transform: scale(1.8);
+  translate: -200px 400px;
+}
+
+.card .plate{
+  transform: scale(1.5);
+  
+}
+
+.logo{
+  scale: 0.7;
+  translate: 0 150px !important;
+}
+
+input {
+  display: none;
+}
+
+input:checked + label {
+  width: 1200px;
+}
+
+input:not(:checked) + label .text,input:not(:checked) + label img  {
+  opacity: 0 !important;
+  transform: translateY(0) !important;
+
+}
+
+.text{
+  transition: 1s; 
+  color: #FFF;
+  font-size: 30px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin: 2em;
+  max-width: 600px;
+}
+
+.text p{
+  font-size: 20px;
+  font-weight: 600;
+  opacity: 0.6;
+  margin-top: 1em;
+}
+
+.accueil-table{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;  
+}
+
+
+.content-text-table{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  
+}
+
+.content-text-table h2{
+  font-size: 40px;
+  margin-bottom: 40px;
+  color: black;
+  
+}
+
+.content-text-table p{
+  display: flex;
+  font-size: 24px;
+  color: black;
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+.parallax-container {
+  position: relative;
+  overflow: hidden; /* Cache les parties de l'image qui dépassent */
+  height: 400px; /* Ajustez selon vos besoins */
+  width: 100vw; /* Fait que le conteneur couvre toute la largeur de la fenêtre */
+  margin: 0; /* Ignore les marges par défaut */
+  padding: 0; /* Supprime les espaces internes */
+}
+
+.parallax-image {
+  position: absolute; /* Permet le positionnement relatif au conteneur */
+  top: 0;
+  left: 0;
+  width: 100%; /* Couvre toute la largeur du conteneur */
+  height: auto; /* Conserve les proportions de l'image */
+  transform: translateY(0);
+  object-fit: cover; /* Ajuste l'image pour remplir le conteneur sans déformation */
+}
+
+.accueil-app{
+  display: flex;
+  flex-direction: column;
+  background-color: #FFDCC7;
+  padding-bottom: 0;
+}
+
+.accueil-app h2{
+  text-align: center;
+  font-size: 40px;
+  color: #000;
+  margin-bottom: 1.5em;
+}
+
+.pres{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  color: #000;
+  
+}
+
+.content-text-app{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 200px;
+  text-align: center;
+  margin-top: 100px;
+  max-width: 40em;
+}
+
+.pres img{
+  max-width: 35%;
+
+}
+
+.content-text-app p{
+  font-size: 24px;
+  margin-bottom: 40px;
+  color: black;
+  font-family: "Kantumruy Pro", sans-serif;
+  
+  
+}
+
+/*annimation*/
+@keyframes growHorizontal {
+  from {
+      width: 0%; /* Départ au centre */
+  }
+  to {
+      width: 300%; /* Taille finale différente pour la largeur */
+  }
+}
+
+/* Animation pour la ligne verticale */
+@keyframes growVertical {
+  from {
+      height: 0%; /* Départ au centre */
+  }
+  to {
+      height: 110%; /* Taille finale différente pour la hauteur */
+  }
+}
+
+@keyframes apphaut{
+  from{
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to{
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
