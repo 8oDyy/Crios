@@ -1,39 +1,42 @@
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
-const { Configuration, OpenAIApi } = require("openai");
+const OpenAI = require("openai");
+const cors = require("cors");
 
 const app = express();
-const PORT = 5500;
-
-// Configuration de l'API OpenAI avec la clé directement intégrée
-const configuration = new Configuration({
-    apiKey: "votre-clé-api",
+const openai = new OpenAI({
+  apiKey: process.env.CHATGPT_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
 
-// Middleware pour traiter les requêtes JSON
+app.use(cors()); // Autoriser les requêtes depuis l'interface utilisateur
 app.use(bodyParser.json());
-app.use(express.static(__dirname));
 
-// Route pour traiter les messages utilisateur
+// Route pour gérer les messages du frontend
 app.post("/chat", async (req, res) => {
-    const { message } = req.body;
+  const userMessage = req.body.message;
 
-    try {
-        const response = await openai.createCompletion({
-            model: "text-davinci-003",
-            prompt: message,
-            max_tokens: 150,
-        });
+  try {
+    // Envoyer le message à l'API ChatGPT
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        { role: "system", content: "Tu es un chef cuisiner, tu va me donner des recettes simple mais efficace avec des termes technique que tout le monde puisse comprendre" },
+        { role: "user", content: userMessage },
+      ],
+    });
 
-        res.json({ reply: response.data.choices[0].text.trim() });
-    } catch (error) {
-        console.error("Erreur lors de l'appel à l'API :", error);
-        res.status(500).json({ reply: "Une erreur est survenue. Réessayez plus tard." });
-    }
+    const reply = completion.choices[0].message.content;
+
+    res.json({ reply }); // Envoyer la réponse au frontend
+  } catch (error) {
+    console.error("Erreur avec l'API OpenAI :", error);
+    res.status(500).json({ error: "Erreur interne du serveur" });
+  }
 });
 
-// Lancer le serveur sur le port spécifié
+// Démarrage du serveur
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Serveur lancé sur http://localhost:${PORT}`);
+  console.log(`Serveur démarré sur le port ${PORT}`);
 });

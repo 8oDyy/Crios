@@ -50,22 +50,34 @@ document.getElementById("send-btn").addEventListener("click", async () => {
   document.getElementById("user-input").value = "";
 
   // Appeler le serveur pour obtenir la réponse
-  const response = await fetch("/chat", {
+  try {
+    const response = await fetch("http://localhost:3000/chat", {
       method: "POST",
       headers: {
-          "Content-Type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ message: userInput }),
-  });
+    });
 
-  const data = await response.json();
+    if (!response.ok) throw new Error("Erreur lors de la communication avec le serveur");
 
-  // Ajouter la réponse de ChatGPT
-  const botMessage = document.createElement("div");
-  botMessage.textContent = `ChatGPT: ${data.reply}`;
-  botMessage.className = "bot-message";
-  chatWindow.appendChild(botMessage);
+    const data = await response.json();
 
-  // Faire défiler vers le bas
-  chatWindow.scrollTop = chatWindow.scrollHeight;
+    // Ajouter la réponse de ChatGPT
+    const botMessage = document.createElement("div");
+    botMessage.textContent = `ChatGPT: ${data.reply}`;
+    botMessage.className = "bot-message";
+    chatWindow.appendChild(botMessage);
+
+    // Faire défiler vers le bas
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  } catch (error) {
+    console.error("Erreur :", error);
+
+    // Afficher un message d'erreur dans le chat
+    const errorMessage = document.createElement("div");
+    errorMessage.textContent = "Erreur lors de la communication avec le serveur.";
+    errorMessage.className = "error-message";
+    chatWindow.appendChild(errorMessage);
+  }
 });
