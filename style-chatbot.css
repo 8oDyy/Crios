@@ -6,7 +6,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f4f4f9;
+    background-color: #EFD9CE;
 }
 
 .chat-container {
@@ -17,6 +17,8 @@ body {
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    opacity: 0;
+    animation: fadeIn .8s ease-in 0.3s forwards;
 }
 
 .chat-window {
@@ -73,3 +75,29 @@ button {
 button:hover {
     background: #0056b3;
 }
+
+.chatbot-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.chatbot-container h1 {
+    margin: 30px;
+    animation: apphaut 1s forwards;
+}
+
+
+
+@keyframes apphaut{
+    from{
+      transform: translateY(100px);
+      opacity: 0;
+    }
+    to{
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }

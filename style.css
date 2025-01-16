@@ -58,7 +58,7 @@ header{
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .cta:hover {
@@ -90,6 +90,23 @@ nav a {
   padding-top: 15px;
   padding-bottom: 15px;
   text-wrap: none;
+  text-decoration: none;
+}
+
+.btn-nav {
+  opacity: 0.65;
+  text-decoration: none;
+}
+.btn{
+  opacity: 1;
+  border-bottom: white 2px solid;
+}
+
+.btn-nav:hover {
+  text-decoration: none;
+  opacity: 1;
+  border-bottom: white 2px solid;
+  font-size: 1.01em;
 }
 
 .accueil-photos {
@@ -267,7 +284,7 @@ nav a {
   translate: 0 150px !important;
 }
 
-input {
+.container input {
   display: none;
 }
 
