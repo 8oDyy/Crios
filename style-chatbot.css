@@ -22,30 +22,38 @@ body {
 }
 
 .chat-window {
-    flex: 1;
+    display: flex;
+    flex-direction: column; /* Aligner les messages verticalement */
     padding: 10px;
     overflow-y: auto;
     border-bottom: 1px solid #ccc;
+    height: 100%; /* Assurez-vous qu'il occupe toute la hauteur disponible */
+    gap: 10px; /* Ajouter un espace entre les messages */
 }
-.user-message {
+
+.user-message, .bot-message {
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin: 10px;
-    padding: 5px;
+    flex-direction: column; /* Alignement vertical pour le contenu des messages */
+    max-width: 80%; /* Éviter que les messages soient trop larges */
+    word-wrap: break-word; /* Permettre aux longs mots d'aller à la ligne */
+}
+
+.user-message {
+    align-self: flex-end; /* Aligner les messages utilisateur à droite */
     background-color: #ffc996;
     color: white;
-    border-radius: 5px;
+    padding: 10px 15px;
+    border-radius: 10px;
 }
 
 .bot-message {
-    display: flex;
-    align-items: center;
-    margin: 10px;
-    padding:5px ;
-    background-color: rgb(255, 129, 94);
-    border-radius: 5px;
+    align-self: flex-start; /* Aligner les messages du bot à gauche */
+    background-color: rgb(255, 184, 164);
+    color: black;
+    padding: 10px 15px;
+    border-radius: 10px;
 }
+
 
 .input-container {
     display: flex;
@@ -65,7 +73,7 @@ button {
     margin-left: 10px;
     padding: 10px 15px;
     font-size: 16px;
-    background: #007bff;
+    background: #814100;
     color: white;
     border: none;
     border-radius: 5px;
@@ -73,7 +81,16 @@ button {
 }
 
 button:hover {
-    background: #0056b3;
+    background: #814100;
+}
+
+#user-input:focus {
+    outline: none;
+    border: #814100 3px solid !important;
+}
+
+#user-input:hover{
+    border: #814100 2px solid;
 }
 
 .chatbot-container {
@@ -88,6 +105,15 @@ button:hover {
     margin: 30px;
     animation: apphaut 1s forwards;
 }
+
+.bot-message div {
+    margin-bottom: 8px; /* Espacement entre les lignes */
+    line-height: 1.5; /* Améliorer la lisibilité */
+  }
+  
+  .bot-message div:first-child {
+    font-weight: bold; /* Premier élément en gras pour les titres ou débuts de recettes */
+  }
 
 
 

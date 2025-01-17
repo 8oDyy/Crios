@@ -1,83 +1,52 @@
-
-document.addEventListener("scroll", () => {
-  // Sélectionnez le conteneur et l'image
-  const container = document.querySelector(".parallax-container");
-  const image = document.querySelector(".parallax-image");
-
-  // Récupère la position du conteneur par rapport à la fenêtre
-  const rect = container.getBoundingClientRect();
-
-  // Calcul de la progression du conteneur dans la fenêtre
-  const scrollProgress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-
-  // Limite la progression à un intervalle de 0 à 1
-  const clampedProgress = Math.min(Math.max(scrollProgress, 0), 1);
-
-  // Déplace l'image verticalement en fonction de la progression
-  const maxOffset = -150; // Ajustez cette valeur pour augmenter ou diminuer le mouvement
-  const offset = clampedProgress * maxOffset;
-
-  // Applique la translation à l'image
-  image.style.transform = `translateY(${offset}px)`;
-});
-
-document.addEventListener("scroll", () => {
-  const wrapper = document.querySelector(".wrapper");
-  const carrouselleH2 = document.querySelector(".carrouselle h2");
-  const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-
-  [wrapper, carrouselleH2].forEach(element => {
-      const rect = element.getBoundingClientRect();
-      if (rect.top <= windowHeight && rect.bottom >= 0) {
-          element.classList.add("visible");
-      }
-  });
-});
-
-document.getElementById("send-btn").addEventListener("click", async () => {
-  const userInput = document.getElementById("user-input").value;
-  if (!userInput.trim()) return;
-
+document.addEventListener("DOMContentLoaded", () => {
   const chatWindow = document.getElementById("chat-window");
+  const userInput = document.getElementById("user-input");
+  const sendBtn = document.getElementById("send-btn");
 
-  // Ajouter le message de l'utilisateur
-  const userMessage = document.createElement("div");
-  userMessage.textContent = `Vous: ${userInput}`;
-  userMessage.className = "user-message";
-  chatWindow.appendChild(userMessage);
+  sendBtn.addEventListener("click", async () => {
+    const userMessage = userInput.value.trim();
+    if (!userMessage) return;
 
-  // Réinitialiser l'input
-  document.getElementById("user-input").value = "";
+    // Affiche le message utilisateur
+    displayMessage(userMessage, "user");
 
-  // Appeler le serveur pour obtenir la réponse
-  try {
-    const response = await fetch("http://localhost:3000/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message: userInput }),
-    });
+    try {
+      const response = await fetch("http://localhost:3000/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userMessage }),
+      });
 
-    if (!response.ok) throw new Error("Erreur lors de la communication avec le serveur");
+      const data = await response.json();
+      const botReply = data.reply;
 
-    const data = await response.json();
+      // Affiche la réponse du bot avec une mise en page améliorée
+      displayMessage(botReply, "bot");
+    } catch (error) {
+      console.error("Erreur :", error);
+      displayMessage("Une erreur est survenue. Veuillez réessayer.", "bot");
+    }
 
-    // Ajouter la réponse de ChatGPT
-    const botMessage = document.createElement("div");
-    botMessage.textContent = `ChatGPT: ${data.reply}`;
-    botMessage.className = "bot-message";
-    chatWindow.appendChild(botMessage);
+    userInput.value = "";
+  });
 
-    // Faire défiler vers le bas
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-  } catch (error) {
-    console.error("Erreur :", error);
+  function displayMessage(message, sender) {
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add(`${sender}-message`);
 
-    // Afficher un message d'erreur dans le chat
-    const errorMessage = document.createElement("div");
-    errorMessage.textContent = "Erreur lors de la communication avec le serveur.";
-    errorMessage.className = "error-message";
-    chatWindow.appendChild(errorMessage);
+    // Diviser la réponse en lignes si nécessaire
+    if (sender === "bot") {
+      message.split("\n").forEach((line) => {
+        const lineDiv = document.createElement("div");
+        lineDiv.textContent = line.trim();
+        messageDiv.appendChild(lineDiv);
+      });
+    } else {
+      messageDiv.textContent = message;
+    }
+
+    chatWindow.appendChild(messageDiv);
+    chatWindow.scrollTop = chatWindow.scrollHeight; // Défilement automatique
   }
 });
+
